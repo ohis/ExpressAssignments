@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var socket = io.connect();
+
+        $('#survey_form').submit(function(e){
+          e.preventDefault();
+
+          socket.emit("posting_form",{
+            name: $('#name').val(),
+            location: $('#location').val(),
+            language: $('#language').val(),
+            comment: $('#comment').val()
+          });
+        });
+
+        socket.on('updated_message',function(data){
+          $('#message').html("You emitted the following information to the server  : "+ JSON.stringify(data.response));
+        });
+
+        socket.on('random_num', function(data){
+          $('#randomNumber').html("Your lucky number is:" + JSON.stringify(data.response))
+        })
+      })
+    </script>
+
+  </head>
+  <body>
+    <div id="message"></div>
+
+    <div id="randomNumber">
+
+    </div>
+
+    <form class="" action="" id="survey_form">
+      Your Name: <input type="text" id="name" value="">
+      <br>
+      <br>
+      Dojo Location:
+      <br>
+      <select class="" id="location">
+        <option value="Mountain View" name="Mountain View">Mountain View</option>
+        <option value="San Jose" name="San Jose">San Jose</option>
+          <option value="Bellevue" name="Bellevue">Bellevue</option>
+        <option value="Dallas" name="Dallas">Dallas</option>
+      </select>
+      <br>
+      Favorite Language :
+      <br>
+      <br>
+      <select class="" id="language">
+        <option value="javascript" name="javascript">javascript</option>
+        <option value="Python" name="Python">Python</option>
+          <option value="Java" name="Java">Java</option>
+        <option value="C" name="C">C</option>
+      </select>
+      <br>
+      Comment(optional):
+      <br>
+      <textarea name="comment" id="comment" rows="8" cols="40"></textarea>
+      <br>
+      <br>
+      <input type="submit" name="" value="Submit">
+    </form>
+
+  </body>
+</html>

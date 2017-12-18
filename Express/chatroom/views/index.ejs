@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      var socket = io.connect();
+
+      $('#new_user').submit(function(e){
+        e.preventDefault();
+        socket.broadcast.emit("new_user",{
+          name:$('#name').val()
+        });
+      })
+
+    })
+
+    </script>
+
+
+  </head>
+  <body>
+
+    <form id="new_user">
+      Your name:
+       <input type="text" name="" value="">
+       <input type="button" name="" value="Cancel">
+       <input type="button" name="" value="OK">
+    </form>
+
+  </body>
+</html>
